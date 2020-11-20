@@ -15,7 +15,20 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   var _questionIndex = 0;
-  var _questionList = ['Favourit Tv show?', 'Faviourt Movie?'];
+  var _questionList = [
+    {
+      'Q': 'What is your faviorte TV show',
+      'A': ['GOT', 'AOT', 'Sherlock', 'Paranormal']
+    },
+    {
+      'Q': 'What is your faviorte Movie',
+      'A': ['The Platform', 'The Dark Knight', 'Toy Story', 'The 6th Sense']
+    },
+    {
+      'Q': 'What is your faviorte Food',
+      'A': ['Pasta', 'Fool', 'Dakwa', 'All of the above, but Mixed!']
+    },
+  ];
 
   void _chooseAnswer() {
     setState(() {
@@ -33,11 +46,12 @@ class _MyAppState extends State<MyApp> {
         body: Column(
           children: [
             Question(
-              _questionList[_questionIndex],
+              _questionList[_questionIndex]['Q'],
             ),
-            Answer(_chooseAnswer),
-            Answer(_chooseAnswer),
-            Answer(_chooseAnswer),
+            ...(_questionList[_questionIndex]['A'] as List<String>)
+                .map((answer) {
+              return Answer(_chooseAnswer, answer);
+            }).toList()
           ],
         ),
       ),
